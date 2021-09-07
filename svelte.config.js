@@ -1,3 +1,4 @@
+import vercel from '@sveltejs/adapter-vercel';
 import path from 'path';
 import preprocess from 'svelte-preprocess';
 
@@ -16,7 +17,8 @@ const config = {
 					'@': path.resolve('./src')
 				}
 			}
-		}
+		},
+		adapter: vercel()
 	}
 };
 
