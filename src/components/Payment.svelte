@@ -19,12 +19,10 @@
 	});
 
 	const initStripe = async () => {
-		// @ts-ignore
 		stripe = await loadStripe(config.STRIPE_API_KEY);
 		secret = await createIntent();
 		elements = stripe.elements();
 
-		// @ts-ignore
 		const cardElement = elements.create('card');
 		cardElement.mount(card);
 	};
