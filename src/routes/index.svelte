@@ -1,22 +1,22 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import Button from '@/components/layout/Button.svelte';
-	import IconButton from '@/components/layout/IconButton.svelte';
 	import Modal from '@/components/layout/Modal.svelte';
 	import Payment from '@/components/Payment.svelte';
-	import { config } from '@/config';
-	import FiCopy from 'svelte-icons-pack/fi/FiCopy';
+	import { getAsync } from '@/helpers/request.helper';
 
 	let showPaymentModal = false;
-	let password: string;
+	let isValidating = false;
 
-	const checkForToken = () => {
-		const token = localStorage.getItem(config.LOCALSTORAGE_KEY);
-		if (token) {
+	const checkForToken = async () => {
+		isValidating = true;
+		try {
+			await getAsync<void>('password/validate');
 			goto('/play');
-			return;
+		} catch {
+			showPaymentModal = true;
 		}
-		showPaymentModal = true;
+		isValidating = false;
 	};
 
 	const closeModal = () => {
@@ -29,29 +29,14 @@
 	<h2>med Lundadrick</h2>
 
 	<div class="btn-container">
-		<Button on:click={checkForToken}>Häng med!</Button>
+		<Button on:click={checkForToken} isLoading={isValidating} loadingText="Validerar"
+			>Häng med!</Button
+		>
 	</div>
 </div>
 
 <Modal visible={showPaymentModal} showOk={false} showCancel={false} on:close={closeModal}>
-	{#if password == null}
-		<h3>Betala för att fortsätta</h3>
-		<p>För 10kr får du access i 24h</p>
-
-		{#if showPaymentModal}
-			<Payment bind:password />
-		{/if}
-	{:else}
-		<h3>Tack för din betalning</h3>
-		<p>Ditt lösenord, giltigt i 24h är:</p>
-		<div class="pwd-container">
-			<span>{password}</span>
-
-			<IconButton icon={FiCopy} title="Klicka för att kopiera" size="1.3em" />
-		</div>
-
-		<Button href="/play" block>Börja spela!</Button>
-	{/if}
+	<Payment />
 </Modal>
 
 <style lang="scss">
@@ -78,15 +63,5 @@
 
 	.btn-container {
 		margin-top: sizing.$spacing * 2;
-	}
-
-	.pwd-container {
-		background: colors.$gray-primary;
-		border-radius: sizing.$spacing;
-		margin: sizing.$spacing * 2 0;
-		padding: sizing.$spacing * 2;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
 	}
 </style>

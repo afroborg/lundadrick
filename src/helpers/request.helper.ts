@@ -19,11 +19,13 @@ api.interceptors.response.use(null, (data) => {
 
 	// If user error (auth failed)
 	if ([400, 401, 403, undefined].includes(response.status)) {
-		goto('/');
-		return data;
+		if (window.location.pathname !== '/') {
+			goto('/');
+		}
+		throw data;
 	}
 
-	return data;
+	throw data;
 });
 
 interface HttpRequestOptions {

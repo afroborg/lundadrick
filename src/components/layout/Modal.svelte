@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 	import FiX from 'svelte-icons-pack/fi/FiX';
+	import { backOut } from 'svelte/easing';
 	import Button from './Button.svelte';
 	import IconButton from './IconButton.svelte';
 
@@ -15,26 +16,42 @@
 	const close = () => {
 		dispatch('close');
 	};
+
+	const pop = (_: HTMLDivElement, { duration }: { duration?: number } = {}) => {
+		return {
+			duration,
+			css: (t: number) => {
+				const scale = backOut(t);
+
+				return `
+					--scale: ${scale};
+					--opacity: ${t}`;
+			}
+		};
+	};
 </script>
 
-<div class="modal" class:visible>
-	<div class="modal-header">
-		<IconButton on:click={close} icon={FiX} title="Close modal" size="1.5em" />
-	</div>
-	<slot />
-
-	{#if showOk || showCancel}
-		<div class="modal-footer">
-			{#if showCancel}
-				<Button on:click={close}>{cancelText}</Button>
-			{/if}
-
-			{#if showOk}
-				<Button>{okText}</Button>
-			{/if}
+{#if visible}
+	<div class="modal" transition:pop={{ duration: 300 }}>
+		<div class="modal-header">
+			<IconButton on:click={close} icon={FiX} title="Close modal" size="1.5em" />
 		</div>
-	{/if}
-</div>
+
+		<slot />
+
+		{#if showOk || showCancel}
+			<div class="modal-footer">
+				{#if showCancel}
+					<Button on:click={close}>{cancelText}</Button>
+				{/if}
+
+				{#if showOk}
+					<Button>{okText}</Button>
+				{/if}
+			</div>
+		{/if}
+	</div>
+{/if}
 
 <style lang="scss">
 	@use '../../styles/colors';
@@ -43,7 +60,8 @@
 	$padding: sizing.$spacing * 4;
 
 	.modal {
-		--scale: 0.85;
+		--scale: 1;
+		--opacity: 1;
 		position: absolute;
 		top: 50%;
 		left: 50%;
@@ -54,17 +72,7 @@
 		border-radius: sizing.$spacing;
 		display: flex;
 		flex-direction: column;
-		transition: all 100ms linear;
-		opacity: 0;
-		pointer-events: none;
-
-		&.visible {
-			--scale: 1;
-			opacity: 1;
-			pointer-events: all;
-			transition-timing-function: cubic-bezier(0, 0, 0.3, 2.35);
-			transition-duration: 300ms;
-		}
+		opacity: var(--opacity);
 	}
 
 	.modal-header {

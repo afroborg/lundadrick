@@ -7,6 +7,7 @@
 	export let isLoading = false;
 	export let disabled = false;
 	export let href: string = null;
+	export let loadingText = '';
 
 	$: blank = href && href.startsWith('http');
 </script>
@@ -26,6 +27,9 @@
 		<span>
 			{#if isLoading}
 				<Icon src={ImSpinner8} className="btn-spinner" />
+				{#if loadingText}
+					<p class="loading-text">{loadingText}</p>
+				{/if}
 			{:else}
 				<slot />
 			{/if}
@@ -69,5 +73,10 @@
 	}
 	:global(.btn-spinner) {
 		animation: rotate 1s linear infinite;
+	}
+
+	.loading-text {
+		display: inline-block;
+		margin-left: sizing.$spacing;
 	}
 </style>
