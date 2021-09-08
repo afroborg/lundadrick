@@ -2,7 +2,7 @@
 	import { config } from '@/config';
 	import { getAsync, postAsync } from '@/helpers/request.helper';
 	import type { Stripe, StripeCardElement, StripeElements } from '@stripe/stripe-js';
-	import { loadStripe } from '@stripe/stripe-js/pure';
+	import { loadStripe } from '@stripe/stripe-js/pure.js';
 	import { onDestroy, onMount } from 'svelte';
 	import FiCopy from 'svelte-icons-pack/fi/FiCopy';
 	import Icon from 'svelte-icons-pack/Icon.svelte';
@@ -159,21 +159,21 @@
 		opacity: 0.8;
 	}
 
-	.discount-code-input {
-		margin-top: sizing.$spacing * 2;
-		height: 40px;
-		width: 100%;
-		background: colors.$gray-primary;
-		border: none;
-		border: 1px solid colors.$gray-primary;
-		padding: sizing.$spacing;
-		border-radius: math.div(sizing.$spacing, 2);
+	// .discount-code-input {
+	// 	margin-top: sizing.$spacing * 2;
+	// 	height: 40px;
+	// 	width: 100%;
+	// 	background: colors.$gray-primary;
+	// 	border: none;
+	// 	border: 1px solid colors.$gray-primary;
+	// 	padding: sizing.$spacing;
+	// 	border-radius: math.div(sizing.$spacing, 2);
 
-		&:focus {
-			outline: none;
-			border-color: colors.$dark-primary;
-		}
-	}
+	// 	&:focus {
+	// 		outline: none;
+	// 		border-color: colors.$dark-primary;
+	// 	}
+	// }
 
 	.pwd-container {
 		background: colors.$gray-primary;
