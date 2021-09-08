@@ -60,7 +60,7 @@
 		const { token } = await validatePayment(payload.paymentIntent.id);
 
 		if (token != null) {
-			localStorage.setItem('ld-token', token);
+			localStorage.setItem(config.LOCALSTORAGE_KEY, token);
 			password = token;
 		}
 	};

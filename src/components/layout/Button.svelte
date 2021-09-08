@@ -36,6 +36,7 @@
 <style lang="scss">
 	@use '../../styles/colors';
 	@use '../../styles/sizing';
+	@use '../../styles/keyframes';
 	@use "sass:math";
 
 	button,
@@ -68,14 +69,5 @@
 	}
 	:global(.btn-spinner) {
 		animation: rotate 1s linear infinite;
-	}
-
-	@keyframes rotate {
-		from {
-			transform: rotate(0deg);
-		}
-		to {
-			transform: rotate(360deg);
-		}
 	}
 </style>

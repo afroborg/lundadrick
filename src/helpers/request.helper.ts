@@ -12,10 +12,15 @@ const api = axios.create({
 });
 
 api.interceptors.response.use(null, (data) => {
-	const { response } = data;
+	// Remove password if failed
+	localStorage.removeItem(config.LOCALSTORAGE_KEY);
 
-	if (response.status === 401) {
+	const { response = {} } = data;
+
+	// If user error (auth failed)
+	if ([400, 401, 403, undefined].includes(response.status)) {
 		goto('/');
+		return data;
 	}
 
 	return data;
@@ -27,13 +32,13 @@ interface HttpRequestOptions {
 }
 
 const queryString = (query: Record<string, string>) => {
-	if (Object.keys(query).length === 0) {
+	const entries = Object.entries(query);
+
+	if (entries.length === 0) {
 		return '';
 	}
 
-	return `?${Object.entries(query)
-		.map(([key, value]) => `${key}=${value}`)
-		.join('&')}`;
+	return `?${entries.map(([key, value]) => `${key}=${value}`).join('&')}`;
 };
 
 export const getAsync = <T>(

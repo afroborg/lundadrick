@@ -1,14 +1,21 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import Button from '@/components/layout/Button.svelte';
 	import IconButton from '@/components/layout/IconButton.svelte';
 	import Modal from '@/components/layout/Modal.svelte';
 	import Payment from '@/components/Payment.svelte';
+	import { config } from '@/config';
 	import FiCopy from 'svelte-icons-pack/fi/FiCopy';
 
 	let showPaymentModal = false;
 	let password: string;
 
 	const checkForToken = () => {
+		const token = localStorage.getItem(config.LOCALSTORAGE_KEY);
+		if (token) {
+			goto('/play');
+			return;
+		}
 		showPaymentModal = true;
 	};
 
@@ -70,7 +77,7 @@
 	}
 
 	.btn-container {
-		margin-top: sizing.$spacing * 4;
+		margin-top: sizing.$spacing * 2;
 	}
 
 	.pwd-container {
