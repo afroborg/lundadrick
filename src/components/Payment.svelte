@@ -20,9 +20,6 @@
 	let isLoading = false;
 	let password: string | null = null;
 
-	let withCode = false;
-	let code = '';
-
 	onMount(async () => {
 		await initStripe();
 	});
@@ -30,10 +27,6 @@
 	onDestroy(async () => {
 		await cancelIntent();
 	});
-
-	const toggleCode = async () => {
-		withCode = !withCode;
-	};
 
 	const cancelIntent = async () => {
 		if (!password) {
@@ -105,13 +98,6 @@
 			<Icon src={ImSpinner8} className="btn-spinner" />
 			<span class="loading-text">Laddar betalning</span>
 		</div>
-		<!-- {:else}
-			<input class="discount-code-input" placeholder="Kod" type="text" bind:value={code} />
-		{/if} -->
-
-		<p class="discount-text" on:click={toggleCode}>
-			{withCode ? 'Tillbaka till betalning' : 'Jag har en kod'}
-		</p>
 
 		<Button
 			block
@@ -144,7 +130,7 @@
 	@use 'sass:math';
 
 	.input {
-		margin-top: sizing.$spacing * 4;
+		margin: sizing.$spacing * 4 0;
 	}
 
 	.stripe-info {
@@ -152,28 +138,6 @@
 		margin-top: sizing.$spacing;
 		text-align: right;
 	}
-
-	.discount-text {
-		margin: sizing.$spacing * 2 0;
-		font-size: 0.85em;
-		opacity: 0.8;
-	}
-
-	// .discount-code-input {
-	// 	margin-top: sizing.$spacing * 2;
-	// 	height: 40px;
-	// 	width: 100%;
-	// 	background: colors.$gray-primary;
-	// 	border: none;
-	// 	border: 1px solid colors.$gray-primary;
-	// 	padding: sizing.$spacing;
-	// 	border-radius: math.div(sizing.$spacing, 2);
-
-	// 	&:focus {
-	// 		outline: none;
-	// 		border-color: colors.$dark-primary;
-	// 	}
-	// }
 
 	.pwd-container {
 		background: colors.$gray-primary;

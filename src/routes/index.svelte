@@ -2,7 +2,7 @@
 	import { goto } from '$app/navigation';
 	import Button from '@/components/layout/Button.svelte';
 	import Modal from '@/components/layout/Modal.svelte';
-	import Payment from '@/components/Payment.svelte';
+	import Validation from '@/components/Validation.svelte';
 	import { getAsync } from '@/helpers/request.helper';
 
 	let showPaymentModal = false;
@@ -36,7 +36,7 @@
 </div>
 
 <Modal visible={showPaymentModal} showOk={false} showCancel={false} on:close={closeModal}>
-	<Payment />
+	<Validation />
 </Modal>
 
 <style lang="scss">
