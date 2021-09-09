@@ -2,6 +2,7 @@
 	import { createEventDispatcher } from 'svelte';
 	import FiX from 'svelte-icons-pack/fi/FiX';
 	import { backOut } from 'svelte/easing';
+	import { fade } from 'svelte/transition';
 	import Button from './Button.svelte';
 	import IconButton from './IconButton.svelte';
 
@@ -12,6 +13,22 @@
 	export let showCancel = true;
 
 	const dispatch = createEventDispatcher();
+
+	$: {
+		if (typeof window !== 'undefined') {
+			if (visible) {
+				window.addEventListener('keyup', closeOnEsc);
+			} else {
+				window.removeEventListener('keyup', closeOnEsc);
+			}
+		}
+	}
+
+	const closeOnEsc = (e: KeyboardEvent) => {
+		if (e.key === 'Escape' && visible) {
+			close();
+		}
+	};
 
 	const close = () => {
 		dispatch('close');
@@ -32,6 +49,7 @@
 </script>
 
 {#if visible}
+	<div class="modal-overlay" transition:fade={{ duration: 300 }} on:click={close} />
 	<div class="modal" transition:pop={{ duration: 300 }}>
 		<div class="modal-header">
 			<IconButton on:click={close} icon={FiX} title="Close modal" size="1.5em" />
@@ -58,6 +76,12 @@
 	@use '../../styles/sizing';
 
 	$padding: sizing.$spacing * 4;
+
+	.modal-overlay {
+		position: fixed;
+		inset: 0;
+		background: rgba(0, 0, 0, 0.3);
+	}
 
 	.modal {
 		--scale: 1;

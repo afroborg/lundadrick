@@ -3,7 +3,7 @@
 	import Icon from 'svelte-icons-pack/Icon.svelte';
 	import Modal from './Modal.svelte';
 
-	let showModal = true;
+	let showModal = false;
 
 	const toggleModal = () => {
 		showModal = !showModal;
