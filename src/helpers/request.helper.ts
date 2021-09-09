@@ -5,7 +5,11 @@ import axios from 'axios';
 const api = axios.create({
 	baseURL: config.API_URL,
 	transformRequest: (data, headers) => {
-		headers['x-ld-pw'] = localStorage.getItem('ld-token');
+		const token = localStorage.getItem('ld-token');
+
+		if (token) {
+			headers['x-ld-pw'] = token;
+		}
 
 		return data;
 	}
