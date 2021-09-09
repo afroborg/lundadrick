@@ -49,6 +49,7 @@
 			display: flex;
 			gap: sizing.$spacing;
 			color: white;
+			cursor: pointer;
 
 			:global(.info-icon) {
 				color: white;
