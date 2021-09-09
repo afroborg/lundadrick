@@ -67,7 +67,7 @@
 	{:else}
 		<form on:submit|preventDefault={validateCode}>
 			<h3>Skriv in din kod</h3>
-			<input type="text" bind:value={code} class="discount-code-input" placeholder="Kod" />
+			<input type="password" bind:value={code} class="discount-code-input" placeholder="Kod" />
 			<div class="btn-container">
 				<Button block on:click={validateCode}>Kontrollera</Button>
 			</div>
