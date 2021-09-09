@@ -1,9 +1,16 @@
-<script></script>
+<script>
+	import Footer from '@/components/layout/Footer.svelte';
+	import Header from '@/components/layout/Header.svelte';
+</script>
 
 <div class="page-wrapper">
+	<Header />
+
 	<main class="content-container">
 		<slot />
 	</main>
+
+	<Footer />
 </div>
 
 <style lang="scss">
@@ -28,11 +35,16 @@
 		}
 	}
 
+	:global(body) {
+		background: colors.$purple-primary;
+	}
+
 	.page-wrapper {
 		height: 100vh;
 		width: 100%;
 		display: grid;
 		overflow: hidden;
+		grid-template-rows: 60px minmax(0, 1fr) 60px;
 	}
 
 	.content-container {
@@ -40,6 +52,5 @@
 		width: 100%;
 		display: grid;
 		place-items: center;
-		background: colors.$purple-primary;
 	}
 </style>

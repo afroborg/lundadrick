@@ -4,10 +4,11 @@
 	export let title: string;
 	export let size = '1em';
 	export let icon: any;
+	export let className: string = '';
 </script>
 
 <button on:click>
-	<Icon src={icon} {size} {title} />
+	<Icon src={icon} {size} {title} {className} />
 </button>
 
 <style lang="scss">
