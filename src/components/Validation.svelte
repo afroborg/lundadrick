@@ -22,8 +22,8 @@
 	];
 
 	let step = 0;
-
 	let code = '';
+	let isValidating = false;
 
 	const setStep = (s: number) => () => {
 		step = s;
@@ -34,13 +34,15 @@
 			return;
 		}
 
+		isValidating = true;
 		getAsync('password/validate', { headers: { 'x-ld-pw': code } })
 			.then(() => {
 				localStorage.setItem(config.LOCALSTORAGE_KEY, code);
 				goto('/play');
+				isValidating = false;
 			})
 			.catch(() => {
-				step = 1;
+				setStep(1)();
 			});
 	};
 </script>
@@ -68,7 +70,9 @@
 		<h3>Skriv in din kod</h3>
 		<input type="password" bind:value={code} class="discount-code-input" placeholder="Kod" />
 		<div class="btn-container">
-			<Button block on:click={validateCode}>Kontrollera</Button>
+			<Button block on:click={validateCode} isLoading={isValidating} loadingText="Validerar..."
+				>Kontrollera</Button
+			>
 		</div>
 	{/if}
 </div>
