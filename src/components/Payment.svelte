@@ -93,7 +93,6 @@
 		<h3>Betala för att fortsätta</h3>
 		<p>För 10kr får du access i 24h</p>
 
-		<!-- {#if !withCode} -->
 		<div class="input" bind:this={card}>
 			<Icon src={ImSpinner8} className="btn-spinner" />
 			<span class="loading-text">Laddar betalning</span>

@@ -25,8 +25,8 @@
 </script>
 
 <div class="welcome-container">
-	<h1>Öka din promille</h1>
-	<h2>med Lundadrick</h2>
+	<h1>KLundka</h1>
+	<h2>Drick som en äkta lundastudent</h2>
 
 	<div class="btn-container">
 		<Button on:click={checkForToken} isLoading={isValidating} loadingText="Validerar"

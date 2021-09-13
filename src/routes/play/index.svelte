@@ -11,7 +11,6 @@
 			href: '/play/point'
 		}
 	];
-	let isLoading = false;
 
 	onMount(async () => {});
 </script>

@@ -3,6 +3,24 @@
 	import Icon from 'svelte-icons-pack/Icon.svelte';
 	import Modal from './Modal.svelte';
 
+	const questionAuthors = [
+		{
+			name: 'Alexandra Wallin',
+			url: null
+		},
+		{
+			name: 'Elin Lundqvist',
+			url: null
+		}
+	];
+
+	const developers = [
+		{
+			name: 'Axel Froborg',
+			url: 'https://axel.froborg.com'
+		}
+	];
+
 	let showModal = false;
 
 	const toggleModal = () => {
@@ -18,16 +36,20 @@
 </footer>
 
 <Modal visible={showModal} showOk={false} cancelText="Stäng" on:close={toggleModal}>
-	<h2>Lundadrick</h2>
+	<h2>KLundka</h2>
+	<h3>Drick som en äkta lundastudent</h3>
 	<p>Byggt med ❤️ och 🍺 i Lund</p>
 
 	<div class="creds-container">
-		<h3>Programmering</h3>
-		<a href="https://axel.froborg.com" target="_blank">Axel Froborg</a>
-
 		<h3>Frågor</h3>
-		<p>Alexandra Wallin</p>
-		<p>Elin Lundqvist</p>
+		{#each questionAuthors as { name, url }}
+			<a href={url} target="_blank">{name}</a>
+		{/each}
+
+		<h3>Programmering</h3>
+		{#each developers as { name, url }}
+			<a href={url} target="_blank">{name}</a>
+		{/each}
 	</div>
 </Modal>
 
@@ -66,6 +88,7 @@
 	a {
 		font-size: 0.9em;
 		color: inherit;
+		display: block;
 	}
 
 	h3 {

@@ -1,28 +1,27 @@
 <script lang="ts">
 	import Button from '@/components/layout/Button.svelte';
 	import { getAsync } from '@/helpers/request.helper';
-	import { onMount } from 'svelte';
+	import { nextQuestion, questions, setQuestions } from '@/stores/questions-store';
+	import { onDestroy, onMount } from 'svelte';
 	import Icon from 'svelte-icons-pack/Icon.svelte';
 	import ImSpinner8 from 'svelte-icons-pack/im/ImSpinner8';
 
-	let questions = [];
 	let isLoading = false;
 
 	onMount(async () => {
 		isLoading = true;
 		const { questions: response } = await getAsync('games/nhie/questions');
-		questions = response;
+		setQuestions(response);
 		isLoading = false;
 	});
 
-	$: hasQuestions = questions.length > 0;
+	onDestroy(() => {
+		setQuestions([]);
+	});
 
-	const nextQuestion = (curr: string) => () => {
-		// Remove current question
-		questions = questions.filter((q) => q != curr);
-	};
+	$: hasQuestions = $questions.length > 0;
 
-	$: question = questions[0];
+	$: question = $questions[0];
 </script>
 
 <div class="never-container">
